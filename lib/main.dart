@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_imed_bd/sqlite/listPerson.dart';
 import 'package:flutter_svg/svg.dart';
 
 void main() {
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       //defino as rotas possíveis dentro da aplicação
       routes: {
         '/': (context) => Home(),
-        //'/sqlite': (context) => ListPersons()
+        '/sqlite': (context) => ListPerson()
       },
     );
   }
