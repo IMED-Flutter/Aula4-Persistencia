@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
 }
 
 class Home extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
@@ -35,54 +36,38 @@ class Home extends StatelessWidget {
     ),
     body: ListView(
       children: <Widget>[
-        ListTile(
-          title: Text("SQLite"),
-          subtitle: Text("Lista de Pessoas"),
-          leading: SvgPicture.asset(
-            "images/sqlite-icon.svg",
-            width: 48,
-            height: 48,
-          ),
-          trailing: Icon(Icons.navigate_next),
-          onTap: (){
-            Navigator.pushNamed(context, "/sqlite");
-          },
-        ),
-        Divider(
-          height: 1,
-          color: Colors.black54,
-        ),
-        ListTile(
-          title: Text("Floor"),
-          subtitle: Text("Lista de Livros"),
-          leading: SvgPicture.asset(
-            "images/db.svg",
-            width: 48,
-            height: 48,
-          ),
-          trailing: Icon(Icons.navigate_next),
-          onTap: (){
-            Navigator.pushNamed(context, "/nosql");
-          },
-        ),
-        Divider(
-          height: 1,
-          color: Colors.black54,
-        ),
-        ListTile(
-          title: Text("Firebase"),
-          subtitle: Text("Lista de Carros"),
-          leading: SvgPicture.asset(
-            "images/firebase-icon.svg",
-            width: 48,
-            height: 48,
-          ),
-          trailing: Icon(Icons.navigate_next),
-          onTap: (){
-            Navigator.pushNamed(context, "/firebase");
-          },
-        ),
+        buildListItem(context, "SQLite", "Pessoas", "sqlite-icon.svg", "/sqlite"),
+        buildListSeparator(),
+        buildListItem(context, "Floor", "Livros", "db.svg", "/nosql"),
+        buildListSeparator(),
+        buildListItem(context, "Firebase", "Carros", "firebase-icon.svg", "/firebase"),
       ],
     ),
   );
+
+  //método para construção dinamica dos itens do ListView
+  Widget buildListItem(
+      BuildContext context,
+      String title,
+      String subTitle,
+      String pathIcon,
+      String nameRoute) => ListTile(
+      title: Text(title),
+      subtitle: Text("Lista de $subTitle"),
+      leading: SvgPicture.asset(
+        "images/$pathIcon",
+        width: 48,
+        height: 48,
+      ),
+      trailing: Icon(Icons.navigate_next),
+      onTap: (){
+        Navigator.pushNamed(context, nameRoute);
+      },
+  );
+
+  Widget buildListSeparator() => Divider(
+    height: 1,
+    color: Colors.black54,
+  );
+
 }
