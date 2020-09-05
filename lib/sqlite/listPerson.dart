@@ -59,6 +59,19 @@ class _ListPersonState extends State<ListPerson> {
     setState(() {});
   }
 
+  insertPerson(Person person) {
+    _database.insert(
+      'person', //a tabela onde o dado vai ser persistido
+      person.toMap(), //passando uma representação em Map (json) do dado a ser salvo
+      conflictAlgorithm: ConflictAlgorithm.fail,
+    ).then((value) {
+      person.id = value;
+      setState(() {
+        personsList.add(person);
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +81,10 @@ class _ListPersonState extends State<ListPerson> {
           if (_database != null) IconButton(
             icon: Icon(Icons.add),
             onPressed: (){
-              Navigator.pushNamed(context, '/addPerson');
+              Future future = Navigator.pushNamed(context, '/addPerson');
+              future.then((person) {
+                if (person != null) insertPerson(person);
+              });
             },
           )
         ],
@@ -96,11 +112,24 @@ class _ListPersonState extends State<ListPerson> {
           title: Text(personsList[index].firstName),
           subtitle: Text(personsList[index].lastName),
           onLongPress: (){
-            //deletePerson(index);
+            deletePerson(index);
           },
         ),
       ),
     );
+  }
+
+  deletePerson(int index) {
+    _database.delete(
+      'person', //nome da tabela
+      where: "id = ?", //cláusula where
+      //usando whereArgs vc evita uma técnica hacker/cracker chamada SQL Injection
+      whereArgs: [personsList[index].id],//argumentos da cláusula
+    ).then((value) {
+      setState(() {
+        personsList.removeAt(index);
+      });
+    });
   }
 
 }
