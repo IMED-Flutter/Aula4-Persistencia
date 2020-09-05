@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_imed_bd/sqlite/model/person.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -9,6 +10,7 @@ class ListPerson extends StatefulWidget {
 
 class _ListPersonState extends State<ListPerson> {
 
+  List<Person> personsList = List<Person>();
   Database _database;
 
   //que todo State possui um ciclo de vida, que inicia pelo initState
@@ -38,8 +40,23 @@ class _ListPersonState extends State<ListPerson> {
         _database = db;
       });
 
-      //readAll();
+      readAll();
     });
+  }
+
+  readAll() async {
+    //faz consulta na base de dados pela tabela person
+    final List<Map<String, dynamic>> maps = await _database.query('person');
+
+    personsList = List.generate(maps.length, (i) {
+      return Person(
+        id: maps[i]['id'],
+        firstName: maps[i]['firstName'],
+        lastName: maps[i]['lastName'],
+      );
+    });
+
+    setState(() {});
   }
 
   @override
@@ -57,7 +74,7 @@ class _ListPersonState extends State<ListPerson> {
         ],
       ),
       body: ListView.separated(
-        itemCount: 5,
+        itemCount: personsList.length,
         itemBuilder: (context, index) => buildListItem(index),
         separatorBuilder: (context, index) => Divider(
           height: 1,
@@ -75,9 +92,9 @@ class _ListPersonState extends State<ListPerson> {
           borderRadius: BorderRadius.circular(5.0),
         ),
         child: ListTile(
-          leading: Text("ID"),//${personsList[index].id}"),
-          title: Text("Nome"),//personsList[index].firstName),
-          subtitle: Text("Sobrenome"),//personsList[index].lastName),
+          leading: Text("${personsList[index].id}"),
+          title: Text(personsList[index].firstName),
+          subtitle: Text(personsList[index].lastName),
           onLongPress: (){
             //deletePerson(index);
           },
