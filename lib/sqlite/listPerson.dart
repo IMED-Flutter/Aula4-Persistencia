@@ -68,7 +68,7 @@ class _ListPersonState extends State<ListPerson> {
           if (_database != null) IconButton(
             icon: Icon(Icons.add),
             onPressed: (){
-
+              Navigator.pushNamed(context, '/addPerson');
             },
           )
         ],
