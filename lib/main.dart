@@ -28,7 +28,9 @@ class MyApp extends StatelessWidget {
         '/sqlite': (context) => ListPerson(),
         '/addPerson': (context) => AddPerson(),
         '/nosql': (context) => ListBooks(),
-        '/addBook': (context) => AddBook()
+        '/addBook': (context) => AddBook(),
+        '/firebase': (context) => ListBooks(),
+        '/addCar': (context) => AddBook()
       },
     );
   }
