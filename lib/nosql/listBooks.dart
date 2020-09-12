@@ -38,11 +38,7 @@ class _ListBooksState extends State<ListBooks> {
           if (bookDAO != null) IconButton(
             icon: Icon(Icons.add),
             onPressed: (){
-              Future<Book> future = Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AddBook(),
-                  ));
+              Future future = Navigator.pushNamed(context, "/addBook");
               future.then((book){
                 if (book != null) {
                   bookDAO.insertBook(book).then((value) {

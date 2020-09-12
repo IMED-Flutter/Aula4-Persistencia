@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_imed_bd/nosql/addBook.dart';
+import 'package:flutter_imed_bd/nosql/listBooks.dart';
 import 'package:flutter_imed_bd/sqlite/addPerson.dart';
 import 'package:flutter_imed_bd/sqlite/listPerson.dart';
 import 'package:flutter_svg/svg.dart';
@@ -24,7 +26,9 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => Home(),
         '/sqlite': (context) => ListPerson(),
-        '/addPerson': (context) => AddPerson()
+        '/addPerson': (context) => AddPerson(),
+        '/nosql': (context) => ListBooks(),
+        '/addBook': (context) => AddBook()
       },
     );
   }
